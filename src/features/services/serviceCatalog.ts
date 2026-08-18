@@ -1,0 +1,68 @@
+import type { Service } from "./service.types";
+
+export const serviceCatalog: Service[] = [
+  {
+    id: "jellyfin",
+    name: "Jellyfin",
+    description: "Watch movies and TV shows",
+    category: "media",
+    access: "family",
+    icon: "/icons/services/jellyfin.svg",
+  },
+  {
+    id: "immich",
+    name: "Immich",
+    description: "Browse and back up photos and videos",
+    category: "photos",
+    access: "family",
+    icon: "/icons/services/immich.svg",
+  },
+  {
+    id: "audiobookshelf",
+    name: "Audiobookshelf",
+    description: "Browse audiobooks and books",
+    category: "media",
+    access: "family",
+    icon: "/icons/services/audiobookshelf.svg",
+  },
+  {
+    id: "seerr",
+    name: "Seerr",
+    description: "Request movies and TV shows",
+    category: "requests",
+    access: "family",
+    icon: "/icons/services/seerr.svg",
+  },
+  {
+    id: "sonarr",
+    name: "Sonarr",
+    description: "Manage TV shows",
+    category: "admin",
+    access: "admin",
+    icon: "/icons/services/sonarr.svg",
+  },
+  {
+    id: "radarr",
+    name: "Radarr",
+    description: "Manage movies",
+    category: "admin",
+    access: "admin",
+    icon: "/icons/services/radarr.svg",
+  },
+  {
+    id: "prowlarr",
+    name: "Prowlarr",
+    description: "Manage indexers",
+    category: "admin",
+    access: "admin",
+    icon: "/icons/services/prowlarr.svg",
+  },
+  {
+    id: "deluge",
+    name: "Deluge",
+    description: "Manage downloads",
+    category: "admin",
+    access: "admin",
+    icon: "/icons/services/deluge.svg",
+  },
+];
