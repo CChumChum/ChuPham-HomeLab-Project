@@ -29,14 +29,16 @@ function ServiceCard({ service }: ServiceCardProps) {
             items-center justify-center
             rounded-xl
             bg-zinc-800
-            text-xl
-            font-bold
-            text-white
+            p-2
             transition
             group-hover:bg-zinc-700
           "
         >
-          {service.icon}
+          <img
+            src={service.icon}
+            alt={`${service.name} logo`}
+            className="h-full w-full object-contain"
+          />
         </div>
 
         {service.access === "admin" && (

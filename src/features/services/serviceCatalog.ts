@@ -7,7 +7,7 @@ export const serviceCatalog: Service[] = [
     description: "Watch movies and TV shows",
     category: "media",
     access: "family",
-    icon: "J",
+    icon: "/icons/services/jellyfin.svg",
   },
   {
     id: "immich",
@@ -15,7 +15,7 @@ export const serviceCatalog: Service[] = [
     description: "Browse and back up photos and videos",
     category: "photos",
     access: "family",
-    icon: "I",
+    icon: "/icons/services/immich.svg",
   },
   {
     id: "audiobookshelf",
@@ -23,7 +23,7 @@ export const serviceCatalog: Service[] = [
     description: "Browse audiobooks and books",
     category: "media",
     access: "family",
-    icon: "A",
+    icon: "/icons/services/audiobookshelf.svg",
   },
   {
     id: "seerr",
@@ -31,7 +31,7 @@ export const serviceCatalog: Service[] = [
     description: "Request movies and TV shows",
     category: "requests",
     access: "family",
-    icon: "S",
+    icon: "/icons/services/seerr.svg",
   },
   {
     id: "sonarr",
@@ -39,7 +39,7 @@ export const serviceCatalog: Service[] = [
     description: "Manage TV shows",
     category: "admin",
     access: "admin",
-    icon: "S",
+    icon: "/icons/services/sonarr.svg",
   },
   {
     id: "radarr",
@@ -47,7 +47,7 @@ export const serviceCatalog: Service[] = [
     description: "Manage movies",
     category: "admin",
     access: "admin",
-    icon: "R",
+    icon: "/icons/services/radarr.svg",
   },
   {
     id: "prowlarr",
@@ -55,7 +55,7 @@ export const serviceCatalog: Service[] = [
     description: "Manage indexers",
     category: "admin",
     access: "admin",
-    icon: "P",
+    icon: "/icons/services/prowlarr.svg",
   },
   {
     id: "deluge",
@@ -63,6 +63,6 @@ export const serviceCatalog: Service[] = [
     description: "Manage downloads",
     category: "admin",
     access: "admin",
-    icon: "D",
+    icon: "/icons/services/deluge.svg",
   },
 ];
