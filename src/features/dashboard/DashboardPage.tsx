@@ -2,17 +2,19 @@ import { useMemo, useState } from "react";
 
 import DashboardHeader from "./components/DashboardHeader";
 
-import ServiceFilters, {
-  type ServiceCategoryFilter,
-} from "../services/components/ServiceFilters";
+import ServiceCategoryFilter, {
+  type ServiceCategoryFilterValue,
+} from "../services/components/ServiceCategoryFilter";
 
 import ServiceSection from "../services/components/ServiceSection";
+
 import { serviceCatalog } from "../services/serviceCatalog";
 
 function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
+
   const [selectedCategory, setSelectedCategory] =
-    useState<ServiceCategoryFilter>("all");
+    useState<ServiceCategoryFilterValue>("all");
 
   const filteredServices = useMemo(() => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
@@ -41,14 +43,28 @@ function DashboardPage() {
   const hasResults = familyServices.length > 0 || adminServices.length > 0;
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-white">
-      <div className="mx-auto max-w-7xl px-6 py-10">
-        <DashboardHeader />
-
-        <ServiceFilters
+    <main
+      className="
+        min-h-screen
+        bg-zinc-950
+        text-white
+      "
+    >
+      <div
+        className="
+          mx-auto
+          max-w-7xl
+          px-6
+          py-10
+        "
+      >
+        <DashboardHeader
           searchQuery={searchQuery}
-          selectedCategory={selectedCategory}
           onSearchChange={setSearchQuery}
+        />
+
+        <ServiceCategoryFilter
+          selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
         />
 
@@ -74,15 +90,30 @@ function DashboardPage() {
           <div
             className="
               rounded-2xl
-              border border-zinc-800
+              border
+              border-zinc-800
               bg-zinc-900
-              px-6 py-12
+              px-6
+              py-12
               text-center
             "
           >
-            <h2 className="text-lg font-semibold">No services found</h2>
+            <h2
+              className="
+                text-lg
+                font-semibold
+              "
+            >
+              No services found
+            </h2>
 
-            <p className="mt-2 text-sm text-zinc-500">
+            <p
+              className="
+                mt-2
+                text-sm
+                text-zinc-500
+              "
+            >
               Try changing your search or category.
             </p>
           </div>
