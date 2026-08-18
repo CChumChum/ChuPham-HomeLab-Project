@@ -1,4 +1,9 @@
+import "dotenv/config";
+
 import Fastify from "fastify";
+
+import { serviceTargets } from "./config/serviceTargets.js";
+import { checkServiceStatus } from "./features/service-status/checkServiceStatus.js";
 
 const app = Fastify({
   logger: true,
@@ -11,6 +16,19 @@ app.get("/api/health", async () => {
   return {
     status: "ok",
     service: "chupham-homelab-api",
+  };
+});
+
+app.get("/api/services/status", async () => {
+  const services = await Promise.all(
+    serviceTargets.map((service) =>
+      checkServiceStatus(service.id, service.url),
+    ),
+  );
+
+  return {
+    services,
+    checkedAt: new Date().toISOString(),
   };
 });
 
