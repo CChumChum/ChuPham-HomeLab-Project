@@ -1,3 +1,4 @@
+import { serviceUrls } from "../../config/serviceUrls";
 import type { Service } from "./service.types";
 
 export const serviceCatalog: Service[] = [
@@ -8,6 +9,7 @@ export const serviceCatalog: Service[] = [
     category: "media",
     access: "family",
     icon: "/icons/services/jellyfin.svg",
+    href: serviceUrls.jellyfin,
   },
   {
     id: "immich",
@@ -16,6 +18,7 @@ export const serviceCatalog: Service[] = [
     category: "photos",
     access: "family",
     icon: "/icons/services/immich.svg",
+    href: serviceUrls.immich,
   },
   {
     id: "audiobookshelf",
@@ -24,6 +27,7 @@ export const serviceCatalog: Service[] = [
     category: "media",
     access: "family",
     icon: "/icons/services/audiobookshelf.svg",
+    href: serviceUrls.audiobookshelf,
   },
   {
     id: "seerr",
@@ -32,6 +36,7 @@ export const serviceCatalog: Service[] = [
     category: "requests",
     access: "family",
     icon: "/icons/services/seerr.svg",
+    href: serviceUrls.seerr,
   },
   {
     id: "sonarr",
@@ -40,6 +45,7 @@ export const serviceCatalog: Service[] = [
     category: "admin",
     access: "admin",
     icon: "/icons/services/sonarr.svg",
+    href: serviceUrls.sonarr,
   },
   {
     id: "radarr",
@@ -48,6 +54,7 @@ export const serviceCatalog: Service[] = [
     category: "admin",
     access: "admin",
     icon: "/icons/services/radarr.svg",
+    href: serviceUrls.radarr,
   },
   {
     id: "prowlarr",
@@ -56,6 +63,7 @@ export const serviceCatalog: Service[] = [
     category: "admin",
     access: "admin",
     icon: "/icons/services/prowlarr.svg",
+    href: serviceUrls.prowlarr,
   },
   {
     id: "deluge",
@@ -64,5 +72,6 @@ export const serviceCatalog: Service[] = [
     category: "admin",
     access: "admin",
     icon: "/icons/services/deluge.svg",
+    href: serviceUrls.deluge,
   },
 ];

@@ -8,6 +8,10 @@ interface ServiceSectionProps {
 }
 
 function ServiceSection({ title, description, services }: ServiceSectionProps) {
+  if (services.length === 0) {
+    return null;
+  }
+
   return (
     <section>
       <div className="mb-5">

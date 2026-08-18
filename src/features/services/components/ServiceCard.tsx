@@ -6,21 +6,24 @@ interface ServiceCardProps {
 
 function ServiceCard({ service }: ServiceCardProps) {
   return (
-    <button
-      type="button"
+    <a
+      href={service.href}
+      target="_blank"
+      rel="noopener noreferrer"
       className="
-        group
-        w-full
-        rounded-2xl
-        border border-zinc-800
-        bg-zinc-900
-        p-5
-        text-left
-        transition
-        hover:-translate-y-1
-        hover:border-zinc-700
-        hover:bg-zinc-800
-      "
+          group
+          block
+          w-full
+          rounded-2xl
+          border border-zinc-800
+          bg-zinc-900
+          p-5
+          text-left
+          transition
+          hover:-translate-y-1
+          hover:border-zinc-700
+          hover:bg-zinc-800
+        "
     >
       <div className="flex items-start justify-between">
         <div
@@ -62,7 +65,7 @@ function ServiceCard({ service }: ServiceCardProps) {
 
         <p className="mt-1 text-sm text-zinc-400">{service.description}</p>
       </div>
-    </button>
+    </a>
   );
 }
 
