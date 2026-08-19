@@ -1,18 +1,36 @@
+import ServiceStatusBadge from "../../service-status/components/ServiceStatusBadge";
+
+import type { ServiceStatusResult } from "../../service-status/serviceStatus.types";
+
 import type { Service } from "../service.types";
 
 interface ServiceCardProps {
   service: Service;
+  status?: ServiceStatusResult;
+  isStatusLoading: boolean;
+  hasStatusError: boolean;
 }
 
-function ServiceCard({ service }: ServiceCardProps) {
+function ServiceCard({
+  service,
+  status,
+  isStatusLoading,
+  hasStatusError,
+}: ServiceCardProps) {
   return (
-    <button
-      type="button"
+    <a
+      href={service.href}
+      target="_blank"
+      rel="noopener noreferrer"
       className="
         group
+        flex
+        h-full
         w-full
+        flex-col
         rounded-2xl
-        border border-zinc-800
+        border
+        border-zinc-800
         bg-zinc-900
         p-5
         text-left
@@ -25,8 +43,11 @@ function ServiceCard({ service }: ServiceCardProps) {
       <div className="flex items-start justify-between">
         <div
           className="
-            flex h-12 w-12
-            items-center justify-center
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
             rounded-xl
             bg-zinc-800
             p-2
@@ -46,7 +67,8 @@ function ServiceCard({ service }: ServiceCardProps) {
             className="
               rounded-full
               bg-zinc-800
-              px-3 py-1
+              px-3
+              py-1
               text-xs
               font-medium
               text-zinc-400
@@ -62,7 +84,15 @@ function ServiceCard({ service }: ServiceCardProps) {
 
         <p className="mt-1 text-sm text-zinc-400">{service.description}</p>
       </div>
-    </button>
+
+      <div className="mt-auto pt-5">
+        <ServiceStatusBadge
+          status={status}
+          isLoading={isStatusLoading}
+          hasError={hasStatusError}
+        />
+      </div>
+    </a>
   );
 }
 

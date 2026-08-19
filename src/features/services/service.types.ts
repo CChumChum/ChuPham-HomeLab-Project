@@ -9,5 +9,5 @@ export interface Service {
   category: ServiceCategory;
   access: ServiceAccess;
   icon: string;
-  href?: string;
+  href: string;
 }
