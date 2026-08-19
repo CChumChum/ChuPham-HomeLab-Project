@@ -47,7 +47,10 @@ function DashboardPage() {
   const {
     statusById,
     isLoading: isStatusLoading,
+    isRefreshing,
     error: statusError,
+    checkedAt,
+    refresh,
   } = useServiceStatuses();
 
   return (
@@ -69,6 +72,12 @@ function DashboardPage() {
         <DashboardHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          totalServices={serviceCatalog.length}
+          statusById={statusById}
+          checkedAt={checkedAt}
+          isRefreshing={isRefreshing}
+          hasStatusError={statusError !== null}
+          onRefresh={refresh}
         />
 
         <ServiceCategoryFilter

@@ -1,11 +1,28 @@
+import ServiceStatusSummary from "../../service-status/components/ServiceStatusSummary";
+
+import type { ServiceStatusMap } from "../../service-status/serviceStatus.types";
+
 interface DashboardHeaderProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
+
+  totalServices: number;
+  statusById: ServiceStatusMap;
+  checkedAt: string | null;
+  isRefreshing: boolean;
+  hasStatusError: boolean;
+  onRefresh: () => void;
 }
 
 function DashboardHeader({
   searchQuery,
   onSearchChange,
+  totalServices,
+  statusById,
+  checkedAt,
+  isRefreshing,
+  hasStatusError,
+  onRefresh,
 }: DashboardHeaderProps) {
   return (
     <header className="mb-8">
@@ -178,6 +195,15 @@ function DashboardHeader({
           </div>
         </div>
       </div>
+
+      <ServiceStatusSummary
+        totalServices={totalServices}
+        statusById={statusById}
+        checkedAt={checkedAt}
+        isRefreshing={isRefreshing}
+        hasError={hasStatusError}
+        onRefresh={onRefresh}
+      />
     </header>
   );
 }

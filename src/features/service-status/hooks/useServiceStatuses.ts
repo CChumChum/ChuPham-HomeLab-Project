@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { fetchServiceStatuses } from "../serviceStatusApi";
 
@@ -11,41 +11,62 @@ export function useServiceStatuses() {
 
   const [isLoading, setIsLoading] = useState(true);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
 
   const [checkedAt, setCheckedAt] = useState<string | null>(null);
 
-  useEffect(() => {
+  const activeControllerRef = useRef<AbortController | null>(null);
+
+  const hasLoadedRef = useRef(false);
+
+  const loadStatuses = useCallback(async () => {
+    activeControllerRef.current?.abort();
+
     const controller = new AbortController();
+    activeControllerRef.current = controller;
 
-    async function loadStatuses() {
-      try {
-        const data = await fetchServiceStatuses(controller.signal);
+    if (hasLoadedRef.current) {
+      setIsRefreshing(true);
+    } else {
+      setIsLoading(true);
+    }
 
-        const statusMap = Object.fromEntries(
-          data.services.map((service) => [service.id, service]),
-        ) as ServiceStatusMap;
+    try {
+      const data = await fetchServiceStatuses(controller.signal);
 
-        setStatusById(statusMap);
-        setCheckedAt(data.checkedAt);
-        setError(null);
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
-          return;
-        }
+      const statusMap = Object.fromEntries(
+        data.services.map((service) => [service.id, service]),
+      ) as ServiceStatusMap;
 
-        setError(
-          error instanceof Error
-            ? error.message
-            : "Failed to load service statuses",
-        );
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false);
+      setStatusById(statusMap);
+      setCheckedAt(data.checkedAt);
+      setError(null);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to load service statuses",
+      );
+    } finally {
+      if (!controller.signal.aborted) {
+        setIsLoading(false);
+        setIsRefreshing(false);
+        hasLoadedRef.current = true;
+
+        if (activeControllerRef.current === controller) {
+          activeControllerRef.current = null;
         }
       }
     }
+  }, []);
 
+  useEffect(() => {
     void loadStatuses();
 
     const intervalId = window.setInterval(() => {
@@ -53,15 +74,17 @@ export function useServiceStatuses() {
     }, REFRESH_INTERVAL_MS);
 
     return () => {
-      controller.abort();
       window.clearInterval(intervalId);
+      activeControllerRef.current?.abort();
     };
-  }, []);
+  }, [loadStatuses]);
 
   return {
     statusById,
     isLoading,
+    isRefreshing,
     error,
     checkedAt,
+    refresh: loadStatuses,
   };
 }
