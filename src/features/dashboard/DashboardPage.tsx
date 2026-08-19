@@ -10,6 +10,8 @@ import ServiceSection from "../services/components/ServiceSection";
 
 import { serviceCatalog } from "../services/serviceCatalog";
 
+import { useServiceStatuses } from "../service-status/hooks/useServiceStatuses";
+
 function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -41,6 +43,12 @@ function DashboardPage() {
   );
 
   const hasResults = familyServices.length > 0 || adminServices.length > 0;
+
+  const {
+    statusById,
+    isLoading: isStatusLoading,
+    error: statusError,
+  } = useServiceStatuses();
 
   return (
     <main
@@ -74,6 +82,9 @@ function DashboardPage() {
               title="Services"
               description="Media, photos, requests and shared applications."
               services={familyServices}
+              statusById={statusById}
+              isStatusLoading={isStatusLoading}
+              hasStatusError={statusError !== null}
             />
 
             {adminServices.length > 0 && (
@@ -82,6 +93,9 @@ function DashboardPage() {
                   title="Administration"
                   description="Server management and automation tools."
                   services={adminServices}
+                  statusById={statusById}
+                  isStatusLoading={isStatusLoading}
+                  hasStatusError={statusError !== null}
                 />
               </div>
             )}

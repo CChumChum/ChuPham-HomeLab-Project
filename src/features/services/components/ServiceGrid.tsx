@@ -1,11 +1,22 @@
 import ServiceCard from "./ServiceCard";
+
 import type { Service } from "../service.types";
+
+import type { ServiceStatusMap } from "../../service-status/serviceStatus.types";
 
 interface ServiceGridProps {
   services: Service[];
+  statusById: ServiceStatusMap;
+  isStatusLoading: boolean;
+  hasStatusError: boolean;
 }
 
-function ServiceGrid({ services }: ServiceGridProps) {
+function ServiceGrid({
+  services,
+  statusById,
+  isStatusLoading,
+  hasStatusError,
+}: ServiceGridProps) {
   return (
     <div
       className="
@@ -18,7 +29,13 @@ function ServiceGrid({ services }: ServiceGridProps) {
       "
     >
       {services.map((service) => (
-        <ServiceCard key={service.id} service={service} />
+        <ServiceCard
+          key={service.id}
+          service={service}
+          status={statusById[service.id]}
+          isStatusLoading={isStatusLoading}
+          hasStatusError={hasStatusError}
+        />
       ))}
     </div>
   );
