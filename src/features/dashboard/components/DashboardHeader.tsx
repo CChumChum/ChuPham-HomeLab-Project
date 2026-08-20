@@ -2,6 +2,8 @@ import ServiceStatusSummary from "../../service-status/components/ServiceStatusS
 
 import type { ServiceStatusMap } from "../../service-status/serviceStatus.types";
 
+import AccountMenu from "../../auth/components/AccountMenu";
+
 interface DashboardHeaderProps {
   searchQuery: string;
   onSearchChange: (value: string) => void;
@@ -133,69 +135,11 @@ function DashboardHeader({
             />
           </div>
 
-          <div
-            className="
-              flex
-              items-center
-              gap-3
-              rounded-xl
-              border
-              border-zinc-800
-              bg-zinc-900
-              px-3
-              py-2
-            "
-          >
-            <div
-              className="
-                flex
-                h-9
-                w-9
-                items-center
-                justify-center
-                rounded-lg
-                bg-zinc-800
-                text-zinc-300
-              "
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="h-5 w-5"
-              >
-                <circle cx="12" cy="8" r="4" />
-
-                <path
-                  d="
-                    M4
-                    21
-                    a8
-                    8
-                    0
-                    0
-                    1
-                    16
-                    0
-                  "
-                />
-              </svg>
-            </div>
-
-            <div className="hidden sm:block">
-              <p className="text-sm font-medium text-zinc-200">
-                {isUserLoading ? "Loading..." : (userName ?? "Account")}
-              </p>
-
-              <p className="text-xs text-zinc-500">
-                {isUserLoading
-                  ? "Checking authentication"
-                  : (userRole ?? "Authenticated user")}
-              </p>
-            </div>
-          </div>
+          <AccountMenu
+            name={userName}
+            role={userRole}
+            isLoading={isUserLoading}
+          />
         </div>
       </div>
 
