@@ -12,6 +12,10 @@ interface DashboardHeaderProps {
   isRefreshing: boolean;
   hasStatusError: boolean;
   onRefresh: () => void;
+
+  userName: string | null;
+  userRole: string | null;
+  isUserLoading: boolean;
 }
 
 function DashboardHeader({
@@ -23,6 +27,9 @@ function DashboardHeader({
   isRefreshing,
   hasStatusError,
   onRefresh,
+  userName,
+  userRole,
+  isUserLoading,
 }: DashboardHeaderProps) {
   return (
     <header className="mb-8">
@@ -178,18 +185,14 @@ function DashboardHeader({
             </div>
 
             <div className="hidden sm:block">
-              <p
-                className="
-                  text-sm
-                  font-medium
-                  text-zinc-200
-                "
-              >
-                Account
+              <p className="text-sm font-medium text-zinc-200">
+                {isUserLoading ? "Loading..." : (userName ?? "Account")}
               </p>
 
               <p className="text-xs text-zinc-500">
-                Authentication coming later
+                {isUserLoading
+                  ? "Checking authentication"
+                  : (userRole ?? "Authenticated user")}
               </p>
             </div>
           </div>

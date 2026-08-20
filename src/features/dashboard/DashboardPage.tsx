@@ -12,6 +12,8 @@ import { serviceCatalog } from "../services/serviceCatalog";
 
 import { useServiceStatuses } from "../service-status/hooks/useServiceStatuses";
 
+import { useCurrentUser } from "../auth/hooks/useCurrentUser";
+
 function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -38,9 +40,11 @@ function DashboardPage() {
     (service) => service.access === "family",
   );
 
-  const adminServices = filteredServices.filter(
-    (service) => service.access === "admin",
-  );
+  const { user, isLoading: isUserLoading } = useCurrentUser();
+
+  const adminServices = user?.isAdmin
+    ? filteredServices.filter((service) => service.access === "admin")
+    : [];
 
   const hasResults = familyServices.length > 0 || adminServices.length > 0;
 
@@ -72,12 +76,20 @@ function DashboardPage() {
         <DashboardHeader
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          totalServices={serviceCatalog.length}
+          totalServices={
+            user?.isAdmin
+              ? serviceCatalog.length
+              : serviceCatalog.filter((service) => service.access === "family")
+                  .length
+          }
           statusById={statusById}
           checkedAt={checkedAt}
           isRefreshing={isRefreshing}
           hasStatusError={statusError !== null}
           onRefresh={refresh}
+          userName={user?.name ?? user?.username ?? null}
+          userRole={user ? (user.isAdmin ? "Administrator" : "Family") : null}
+          isUserLoading={isUserLoading}
         />
 
         <ServiceCategoryFilter
