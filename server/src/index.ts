@@ -19,6 +19,38 @@ app.get("/api/health", async () => {
   };
 });
 
+app.get("/api/auth/me", async (request, reply) => {
+  const username = request.headers["x-authentik-username"];
+  const email = request.headers["x-authentik-email"];
+  const name = request.headers["x-authentik-name"];
+  const groupsHeader = request.headers["x-authentik-groups"];
+
+  if (typeof username !== "string") {
+    return reply.status(401).send({
+      authenticated: false,
+    });
+  }
+
+  const groups =
+    typeof groupsHeader === "string"
+      ? groupsHeader
+          .split("|")
+          .map((group) => group.trim())
+          .filter(Boolean)
+      : [];
+
+  return {
+    authenticated: true,
+    user: {
+      username,
+      email: typeof email === "string" ? email : null,
+      name: typeof name === "string" ? name : username,
+      groups,
+      isAdmin: groups.includes("homelab-admins"),
+    },
+  };
+});
+
 app.get("/api/services/status", async () => {
   const services = await Promise.all(
     serviceTargets.map((service) =>
