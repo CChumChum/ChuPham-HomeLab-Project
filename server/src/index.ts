@@ -5,6 +5,8 @@ import Fastify from "fastify";
 import { serviceTargets } from "./config/serviceTargets.js";
 import { checkServiceStatus } from "./features/service-status/checkServiceStatus.js";
 
+import { getAuthenticatedUser } from "./features/auth/getAuthenticatedUser.js";
+
 const app = Fastify({
   logger: true,
 });
@@ -20,40 +22,41 @@ app.get("/api/health", async () => {
 });
 
 app.get("/api/auth/me", async (request, reply) => {
-  const username = request.headers["x-authentik-username"];
-  const email = request.headers["x-authentik-email"];
-  const name = request.headers["x-authentik-name"];
-  const groupsHeader = request.headers["x-authentik-groups"];
+  const user = getAuthenticatedUser(request);
 
-  if (typeof username !== "string") {
+  if (!user) {
     return reply.status(401).send({
       authenticated: false,
     });
   }
 
-  const groups =
-    typeof groupsHeader === "string"
-      ? groupsHeader
-          .split("|")
-          .map((group) => group.trim())
-          .filter(Boolean)
-      : [];
-
   return {
     authenticated: true,
-    user: {
-      username,
-      email: typeof email === "string" ? email : null,
-      name: typeof name === "string" ? name : username,
-      groups,
-      isAdmin: groups.includes("homelab-admins"),
-    },
+    user,
   };
 });
 
-app.get("/api/services/status", async () => {
+app.get("/api/services/status", async (request, reply) => {
+  const user = getAuthenticatedUser(request);
+
+  if (!user) {
+    return reply.status(401).send({
+      message: "Authentication required",
+    });
+  }
+
+  if (!user.isAdmin && !user.isFamily) {
+    return reply.status(403).send({
+      message: "Access denied",
+    });
+  }
+
+  const allowedServices = user.isAdmin
+    ? serviceTargets
+    : serviceTargets.filter((service) => service.access === "family");
+
   const services = await Promise.all(
-    serviceTargets.map((service) =>
+    allowedServices.map((service) =>
       checkServiceStatus(service.id, service.url),
     ),
   );

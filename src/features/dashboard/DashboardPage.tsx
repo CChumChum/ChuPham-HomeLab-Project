@@ -95,6 +95,7 @@ function DashboardPage() {
         <ServiceCategoryFilter
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
+          showAdmin={user?.isAdmin ?? false}
         />
 
         {hasResults ? (

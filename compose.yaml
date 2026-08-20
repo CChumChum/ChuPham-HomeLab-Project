@@ -35,9 +35,6 @@ services:
 
     container_name: chupham-homelab-frontend
 
-    ports:
-      - "${HOMELAB_PORTAL_PORT:-8088}:80"
-
     depends_on:
       - api
 

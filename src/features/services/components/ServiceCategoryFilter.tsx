@@ -5,9 +5,10 @@ export type ServiceCategoryFilterValue = "all" | ServiceCategory;
 interface ServiceCategoryFilterProps {
   selectedCategory: ServiceCategoryFilterValue;
   onCategoryChange: (category: ServiceCategoryFilterValue) => void;
+  showAdmin: boolean;
 }
 
-const categories: {
+const baseCategories: {
   label: string;
   value: ServiceCategoryFilterValue;
 }[] = [
@@ -15,13 +16,23 @@ const categories: {
   { label: "Media", value: "media" },
   { label: "Photos", value: "photos" },
   { label: "Requests", value: "requests" },
-  { label: "Admin", value: "admin" },
 ];
 
 function ServiceCategoryFilter({
   selectedCategory,
   onCategoryChange,
+  showAdmin,
 }: ServiceCategoryFilterProps) {
+  const categories = showAdmin
+    ? [
+        ...baseCategories,
+        {
+          label: "Admin",
+          value: "admin" as ServiceCategoryFilterValue,
+        },
+      ]
+    : baseCategories;
+
   return (
     <div className="mb-10 flex flex-wrap gap-2">
       {categories.map((category) => {
