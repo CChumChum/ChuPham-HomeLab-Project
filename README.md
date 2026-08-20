@@ -131,21 +131,21 @@ These services use private Tailscale addresses and are not exposed through publi
 
 ### Family-facing services
 
-| Service | Purpose |
-| --- | --- |
-| Jellyfin | Movies and TV shows |
-| Immich | Photo and video management |
-| Audiobookshelf | Audiobooks and books |
-| Seerr | Media requests |
+| Service        | Purpose                    |
+| -------------- | -------------------------- |
+| Jellyfin       | Movies and TV shows        |
+| Immich         | Photo and video management |
+| Audiobookshelf | Audiobooks and books       |
+| Seerr          | Media requests             |
 
 ### Administrative services
 
-| Service | Purpose |
-| --- | --- |
-| Sonarr | TV automation |
-| Radarr | Movie automation |
+| Service  | Purpose            |
+| -------- | ------------------ |
+| Sonarr   | TV automation      |
+| Radarr   | Movie automation   |
 | Prowlarr | Indexer management |
-| Deluge | Download client |
+| Deluge   | Download client    |
 
 Administrative services are only displayed to users with administrator access.
 
@@ -633,35 +633,6 @@ Also never commit:
 - Certificates containing private keys
 
 The repository should contain only safe example configuration.
-
----
-
-## Documentation
-
-Additional documentation can be kept in:
-
-```text
-docs/
-├── ARCHITECTURE.md
-├── DEPLOYMENT.md
-└── SECURITY.md
-```
-
----
-
-## Continuous Integration
-
-GitHub Actions can validate both projects on pushes and pull requests.
-
-```text
-Frontend
-├── npm ci
-└── npm run build
-
-Backend
-├── npm ci
-└── npm run build
-```
 
 ---
 
