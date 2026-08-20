@@ -6,6 +6,12 @@ The project provides a single authenticated dashboard for family-facing services
 
 ---
 
+## Preview
+
+![ChuPham HomeLab Dashboard](docs/images/ChuPham_Dashboard.png)
+
+---
+
 ## Features
 
 - Central dashboard for self-hosted services
