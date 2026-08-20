@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+node_modules
+**/node_modules
+
+# Existing builds
+dist
+**/dist
+
+# Environment files / secrets
+.env
+.env.*
+!.env.example
+
+server/.env
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backend is built separately
+server/

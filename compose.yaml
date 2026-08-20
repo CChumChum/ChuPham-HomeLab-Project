@@ -1,0 +1,51 @@
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+
+    container_name: chupham-homelab-api
+
+    env_file:
+      - ./server/.env
+
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+
+    restart: unless-stopped
+
+    networks:
+      - homelab-portal
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+      args:
+        VITE_JELLYFIN_URL: ${VITE_JELLYFIN_URL}
+        VITE_IMMICH_URL: ${VITE_IMMICH_URL}
+        VITE_AUDIOBOOKSHELF_URL: ${VITE_AUDIOBOOKSHELF_URL}
+        VITE_SEERR_URL: ${VITE_SEERR_URL}
+        VITE_SONARR_URL: ${VITE_SONARR_URL}
+        VITE_RADARR_URL: ${VITE_RADARR_URL}
+        VITE_PROWLARR_URL: ${VITE_PROWLARR_URL}
+        VITE_DELUGE_URL: ${VITE_DELUGE_URL}
+
+    container_name: chupham-homelab-frontend
+
+    ports:
+      - "${HOMELAB_PORTAL_PORT:-8088}:80"
+
+    depends_on:
+      - api
+
+    restart: unless-stopped
+
+    networks:
+      - homelab-portal
+
+networks:
+  homelab-portal:
+    name: homelab-portal
