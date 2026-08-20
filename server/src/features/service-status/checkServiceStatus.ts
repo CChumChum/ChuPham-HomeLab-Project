@@ -30,6 +30,7 @@ export async function checkServiceStatus(
 
     const responseTimeMs = Math.round(performance.now() - startTime);
 
+    // Only reachability matters; release the response stream immediately.
     await response.body?.cancel();
 
     return {

@@ -22,6 +22,7 @@ export function useServiceStatuses() {
   const hasLoadedRef = useRef(false);
 
   const loadStatuses = useCallback(async () => {
+    // Keep a slower request from overwriting a newer refresh.
     activeControllerRef.current?.abort();
 
     const controller = new AbortController();
@@ -54,6 +55,7 @@ export function useServiceStatuses() {
           : "Failed to load service statuses",
       );
     } finally {
+      // An aborted request no longer owns the shared loading state.
       if (!controller.signal.aborted) {
         setIsLoading(false);
         setIsRefreshing(false);

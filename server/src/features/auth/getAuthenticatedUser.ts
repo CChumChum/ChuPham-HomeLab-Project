@@ -12,6 +12,7 @@ export interface AuthenticatedUser {
 export function getAuthenticatedUser(
   request: FastifyRequest,
 ): AuthenticatedUser | null {
+  // Authentik sets these headers after Caddy's forward-auth check.
   const username = request.headers["x-authentik-username"];
 
   if (typeof username !== "string") {

@@ -283,6 +283,8 @@ The frontend refreshes service status automatically and also includes a manual r
 
 ## Repository Structure
 
+For a short description of every tracked file, see [Codebase Guide](docs/CODEBASE.md).
+
 ```text
 .
 ├── docker/
